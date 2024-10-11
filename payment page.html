@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0ebf5; /* Light grey-blue background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 400px;
+            background-color: #f7f9fc; /* Light, warm grey for container */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+
+        h2 {
+            font-size: 22px;
+            color: #2a52be; /* Soft blue for header */
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin-bottom: 20px;
+            height: 150px; /* Placeholder height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f4f7; /* Placeholder background */
+            border-radius: 10px;
+            border: 2px dashed #d1dae4; /* Dashed border to indicate QR space */
+        }
+
+        .upi-id {
+            background-color: #f0f4f7; /* Slightly darker grey-blue */
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #d1dae4;
+            margin-bottom: 10px;
+        }
+
+        .upi-id span {
+            font-size: 14px; /* Reduced font size */
+            color: #2a52be; /* Soft blue for UPI text */
+        }
+
+        .copy-btn {
+            background-color: #ffd700; /* Gold for button */
+            border: none;
+            padding: 5px 10px; /* Reduced padding for smaller button */
+            font-size: 12px; /* Reduced font size */
+            color: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #ffb400; /* Slightly darker gold on hover */
+        }
+
+        .utr-input {
+            margin-top: 10px; /* Reduced top margin */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .utr-input label {
+            font-size: 14px; /* Reduced font size */
+            color: #2a52be; /* Soft blue for label */
+            margin-bottom: 5px; /* Reduced margin */
+        }
+
+        .utr-input input {
+            padding: 8px; /* Reduced padding */
+            font-size: 14px; /* Reduced font size */
+            border-radius: 8px;
+            border: 1px solid #dcdcdc;
+            background-color: #fafafa;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .utr-input input:focus {
+            border-color: #2a52be; /* Soft blue border on focus */
+        }
+
+        .pay-btn, .submit-btn {
+            margin-top: 10px; /* Reduced margin */
+            padding: 10px; /* Reduced button padding */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px; /* Reduced font size */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .pay-btn {
+            background-color: #007acc; /* Rich blue for pay button */
+        }
+
+        .pay-btn:hover {
+            background-color: #005fa3; /* Darker blue on hover */
+        }
+
+        .submit-btn {
+            background-color: #32cd32; /* Green for submit button */
+        }
+
+        .submit-btn:hover {
+            background-color: #2ba52b; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Complete Your Deposit</h2>
+        <div class="qr-code">
+            <!-- Leave the space for the QR code -->
+            QR Code Placeholder
+        </div>
+
+        <div class="upi-id">
+            <span>UPI ID: 998877666@fam</span>
+            <button class="copy-btn" onclick="copyUPI()">Copy</button>
+        </div>
+
+        <div class="utr-input">
+            <label for="utr">Enter UTR (Unique Transaction Reference)</label>
+            <input type="text" id="utr" placeholder="Enter UTR">
+        </div>
+
+        <button class="pay-btn" onclick="payNow()">Pay Now</button> <!-- Pay button added -->
+
+        <button class="submit-btn" onclick="submitDeposit()">Submit UTR</button>
+    </div>
+
+    <script>
+        // Function to copy the UPI ID to clipboard
+        function copyUPI() {
+            const upiID = '998877666@fam';
+            const tempInput = document.createElement('input');
+            tempInput.value = upiID;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert('UPI ID copied to clipboard');
+        }
+
+        // Function to handle the submission of the UTR
+        function submitDeposit() {
+            const utr = document.getElementById('utr').value;
+            if (utr) {
+                alert(`UTR submitted: ${utr}`);
+                // You can implement your server-side logic here to validate and process the UTR
+            } else {
+                alert('Please enter a valid UTR');
+            }
+        }
+
+        // Function to handle Pay Now button
+        function payNow() {
+            alert('Redirecting to payment gateway...');
+            // Logic for handling payment redirection
+        }
+
+        // Load the channel and amount from the query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedChannel = urlParams.get('channel');
+        const selectedAmount = urlParams.get('amount');
+
+        // Update the page with selected channel and amount (optional, for display purposes)
+        if (selectedChannel && selectedAmount) {
+            document.querySelector('h2').innerText = `Complete Deposit for ${selectedAmount} via ${selectedChannel}`;
+        }
+    </script>
+</body>
+</html>
